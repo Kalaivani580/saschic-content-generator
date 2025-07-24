@@ -1,78 +1,46 @@
-
 import streamlit as st
-from openai import OpenAI
-import openai
 
-import os
-from dotenv import load_dotenv
+st.set_page_config(page_title="✨ Saschic Content Generator", page_icon="✨")
 
-load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=openai_api_key)
-
-st.set_page_config(page_title="Saschic Content Generator")
 st.title("✨ Saschic Content Generator")
 
+# Dropdown for content type
 content_type = st.selectbox(
     "What do you want to generate?",
-    ["Instagram Caption", "Short Story", "Tagline"]
+    ["Instagram Caption", "Short Story", "Tagline"],
+    key="selectbox_content_type"
 )
 
-product_name = st.text_input("Enter Product or Theme Name (e.g., Wooden Gift Frame)")
-audience = st.text_input("Target Audience (e.g., Couples, Kids, Friends, etc.)")
-
-if st.button("Generate"):
-    with st.spinner("Generating with magic..."):
-        prompt = ""
-
-        if content_type == "Instagram Caption":
-            prompt = f"Write an Instagram caption for a product called '{product_name}' for {audience}. Make it emotional or fun."
-        elif content_type == "Short Story":
-            prompt = f"Write a short, simple story (max 5 lines) about '{product_name}' that would interest {audience}. Use friendly and engaging tone."
-        elif content_type == "Tagline":
-            prompt = f"Write a catchy one-line Instagram tagline for a product called '{product_name}', targeting {audience}."
-
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        st.success("Here is your generated content:")
-        st.write(response.choices[0].message.content)
-
-import streamlit as st
-from openai import OpenAI
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=openai_api_key)
-
-st.set_page_config(page_title="Saschic Content Generator")
-st.title("✨ Saschic Content Generator")
-
-content_type = st.selectbox(
-    "What do you want to generate?",
-    ["Instagram Caption", "Short Story", "Tagline"]
+# Product/Theme input
+product_name = st.text_input(
+    "Enter Product or Theme Name (e.g., Wooden Gift Frame)",
+    key="input_product"
 )
 
-product_name = st.text_input("Enter Product or Theme Name (e.g., Wooden Gift Frame)")
-audience = st.text_input("Target Audience (e.g., Couples, Kids, Friends, etc.)")
+# Target Audience input
+audience = st.text_input(
+    "Target Audience (e.g., Couples, Kids, Friends, etc.)",
+    key="input_audience"
+)
 
-if st.button("Generate"):
-    with st.spinner("Generating with magic..."):
-        prompt = ""
+# Submit button
+if st.button("Generate", key="button_generate"):
+    if content_type == "Instagram Caption":
+        caption = f"💖 Celebrate moments with our {product_name}! Perfect for {audience} who love unique memories. 🖼️✨ #SaschicStyle"
+        st.subheader("Here is your generated caption:")
+        st.success(caption)
 
-        if content_type == "Instagram Caption":
-            prompt = f"Write an Instagram caption for a product called '{product_name}' for {audience}. Make it emotional or fun."
-        elif content_type == "Short Story":
-            prompt = f"Write a short, simple story (max 5 lines) about '{product_name}' that would interest {audience}. Use friendly and engaging tone."
-        elif content_type == "Tagline":
-            prompt = f"Write a catchy one-line Instagram tagline for a product called '{product_name}', targeting {audience}."
-
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}]
+    elif content_type == "Short Story":
+        story = (
+            f"Once upon a time not too long ago, a happily-engaged couple discovered a charming little store. "
+            f"There, they found our beautiful {product_name}, crafted with love and care. They placed their favourite "
+            f"memory in it, and from that day, it became a part of their cozy love story. Perfect for {audience} looking to "
+            f"capture moments that matter. 💑✨"
         )
-        st.success("Here is your generated content:")
-        st.write(response.choices[0].message.content)
+        st.subheader("Here is your generated story:")
+        st.success(story)
+
+    elif content_type == "Tagline":
+        tagline = f"{product_name}: Crafted for {audience}, Cherished Forever. ✨"
+        st.subheader("Here is your generated tagline:")
+        st.success(tagline)

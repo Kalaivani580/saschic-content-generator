@@ -1,0 +1,8 @@
+# Ignore environment and OS folders
+venv/
+Lib/
+Scripts/
+pyvenv.cfg
+.env
+*.pyc
+__pycache__/
