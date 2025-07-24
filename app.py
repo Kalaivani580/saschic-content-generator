@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import streamlit as st
 from openai import OpenAI
 import openai
@@ -38,7 +38,7 @@ if st.button("Generate"):
         )
         st.success("Here is your generated content:")
         st.write(response.choices[0].message.content)
-=======
+
 import streamlit as st
 from openai import OpenAI
 import os
@@ -76,4 +76,3 @@ if st.button("Generate"):
         )
         st.success("Here is your generated content:")
         st.write(response.choices[0].message.content)
->>>>>>> 3e5ca673efda4ac159537ef4196c1fad96081733
